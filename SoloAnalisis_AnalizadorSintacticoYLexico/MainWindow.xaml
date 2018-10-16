@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoloAnalisis_AnalizadorSintacticoYLexico"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Editor de Texto" Height="800" Width="1300" ResizeMode="NoResize">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Archivo">
+                <MenuItem Header="Abrir" Click="abrirArchivo"/>
+                <MenuItem Header="Guardar" Click="guardarArchivo"/>
+                <MenuItem Header="Guardar Como" Click="guardarArchivoComo"/>
+                <Separator/>
+                <MenuItem Header="Salir" Click="salirDelPrograma"/>
+            </MenuItem>
+            <MenuItem Header="Analizar">
+                <MenuItem Header="Analizador Lexico" Click="analizar"/>
+            </MenuItem>
+            <MenuItem Header="Reportes">
+                <MenuItem Header="Generar Reporte" Click="generarReporteTokens"/>
+                <MenuItem Header="Generar Diagrama" Click="generarDiagrama"/>
+            </MenuItem>
+            <MenuItem Header="Ayuda">
+                <MenuItem Header="Manual de la aplicacion" Click="verManuales"/>
+                <MenuItem Header="Acerca de" Click="verAcercaDe"/>
+            </MenuItem>
+        </Menu>
+        <TextBox
+            Name="txtContenido"
+            AcceptsTab="True"
+            TextWrapping="Wrap"
+            AcceptsReturn="True"
+            VerticalScrollBarVisibility="Visible"
+            Height="Auto"
+            Width="Auto"
+        />
+    </DockPanel>
 </Window>
