@@ -70,6 +70,8 @@
     </ApplicationDefinition>
     <Compile Include="Administracion\AbrirArchivo.vb" />
     <Compile Include="Administracion\GuardarCodigo.vb" />
+    <Compile Include="Analizador\AnalizadorLexico.vb" />
+    <Compile Include="Analizador\AnalizadorSintactico.vb" />
     <Compile Include="Analizador\ManejoDeDatos.vb" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

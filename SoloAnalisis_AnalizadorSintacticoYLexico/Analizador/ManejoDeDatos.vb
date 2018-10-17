@@ -150,11 +150,11 @@ Public Class ManejoDeDatos
     End Sub
 
     Private Sub agregarTokenATabla(ByVal lexema As String, ByVal tipo As String, ByVal columna As Integer, ByVal fila As Integer)
-        tokens.Add(New Token(lexema, tipo, columna, fila))
+        'tokens.Add(New Token(lexema, tipo, columna, fila))
     End Sub
 
     Private Sub agregarErrorATabla(ByVal lexema As String, ByVal tipo As String, ByVal columna As Integer, ByVal fila As Integer)
-        errores.Add(New Token(lexema, tipo, columna, fila))
+        'errores.Add(New Token(lexema, tipo, columna, fila))
         errorEncontrado = True
     End Sub
 

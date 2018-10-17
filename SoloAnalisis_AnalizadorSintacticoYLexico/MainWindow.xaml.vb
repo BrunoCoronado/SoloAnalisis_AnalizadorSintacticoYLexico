@@ -2,8 +2,10 @@
     Public Shared ruta As String = ""
     'apartado para modulo de diagrama de clases
     Private Sub analizar(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim manejoDeDatos As New ManejoDeDatos
-        manejoDeDatos.analizarLexico(obtenerCodigo())
+        'Dim manejoDeDatos As New ManejoDeDatos
+        'ManejoDeDatos.analizarLexico(obtenerCodigo())
+        Dim analizadorLexico As New AnalizadorLexico
+        analizadorLexico.analizar(obtenerCodigo())
     End Sub
 
     Private Sub generarDiagrama(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -15,7 +17,7 @@
         Dim manejoDeDatos As New ManejoDeDatos
         manejoDeDatos.reporteDeTokens(obtenerCodigo())
     End Sub
-    'apartado funcional
+
     Private Sub abrirArchivo(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim abrirArchivo As New AbrirArchivo()
         txtContenido.Text = abrirArchivo.abrirArchivo()

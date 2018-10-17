@@ -1,12 +1,14 @@
 ﻿Public Class Token
     Private _lexema As String
     Private _tipo As String
+    Private _token As integer
     Private _columna As Integer
     Private _fila As Integer
 
-    Public Sub New(lexema As String, tipo As String, columna As Integer, fila As Integer)
+    Public Sub New(lexema As String, tipo As String, token As Integer, columna As Integer, fila As Integer)
         Me._lexema = lexema
         Me._tipo = tipo
+        Me._token = token
         Me._columna = columna
         Me._fila = fila
     End Sub
@@ -26,6 +28,15 @@
         End Get
         Set(value As String)
             Me._tipo = value
+        End Set
+    End Property
+
+    Public Property token As Integer
+        Get
+            Return Me._token
+        End Get
+        Set(value As Integer)
+            Me._token = value
         End Set
     End Property
 
