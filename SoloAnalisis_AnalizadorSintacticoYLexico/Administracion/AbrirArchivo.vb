@@ -9,7 +9,7 @@
 
         If openFileDialog.FileName IsNot "" Then
             MainWindow.ruta = openFileDialog.FileName
-            Dim streamReader As New System.IO.StreamReader(MainWindow.ruta)
+            Dim streamReader As New System.IO.StreamReader(MainWindow.ruta, System.Text.Encoding.Default)
             Try
                 Do While streamReader.Peek >= 0
                     codigo = codigo + streamReader.ReadLine() + vbCrLf

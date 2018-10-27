@@ -1,21 +1,19 @@
 ﻿Class MainWindow
     Public Shared ruta As String = ""
-    'apartado para modulo de diagrama de clases
+
     Private Sub analizar(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        'Dim manejoDeDatos As New ManejoDeDatos
-        'ManejoDeDatos.analizarLexico(obtenerCodigo())
-        Dim analizadorLexico As New AnalizadorLexico
-        analizadorLexico.analizar(obtenerCodigo())
+        Dim analizadorCentral As New AnalizadorCentral
+        analizadorCentral.analizarLexico(obtenerCodigo())
     End Sub
 
     Private Sub generarDiagrama(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim manejoDeDatos As New ManejoDeDatos
-        manejoDeDatos.diagramarCodigo(obtenerCodigo())
+        Dim analizadorCentral As New AnalizadorCentral
+        analizadorCentral.diagramarCodigo(obtenerCodigo())
     End Sub
 
     Private Sub generarReporteTokens(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim manejoDeDatos As New ManejoDeDatos
-        manejoDeDatos.reporteDeTokens(obtenerCodigo())
+        Dim analizadorCentral As New AnalizadorCentral
+        analizadorCentral.reportarAnalisis(obtenerCodigo())
     End Sub
 
     Private Sub abrirArchivo(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -47,9 +45,9 @@
             MessageBox.Show("Manuales no encotrados en desktop!", "ERROR")
         End Try
     End Sub
-
+    
     Private Sub verAcercaDe(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        MessageBox.Show("Analizador Lexico V1.0" & vbCrLf & "Bruno Marco José Coronado Morales" & vbCrLf & "201709362", "Acerca de")
+        MessageBox.Show("Analizador Lexico Y Sintactico V1.0" & vbCrLf & "Bruno Marco José Coronado Morales" & vbCrLf & "201709362", "Acerca de")
     End Sub
 
     Private Function obtenerCodigo() As ArrayList

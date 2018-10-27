@@ -1,5 +1,6 @@
 ﻿Public Class AnalizadorLexico
     Private tokens As ArrayList
+    Private errores As ArrayList
     Private palabra As String
     Private textoEntreComillas As String
     Private inicioTextoEntreComillas As Integer
@@ -9,14 +10,17 @@
     Dim identificadorConDigitos As Boolean
     Dim esNumero As Boolean
     Dim comillasAbiertas As Boolean
+    Dim existeError As Boolean
 
     Public Sub New()
         tokens = New ArrayList()
+        errores = New ArrayList()
         palabra = ""
         codigo = ""
     End Sub
-
-    Public Sub analizar(entrada As ArrayList)
+    '“”
+    Public Function analizar(entrada As ArrayList) As Dictionary(Of String, ArrayList)
+        Dim resultado As New Dictionary(Of String, ArrayList)
         Dim noLinea As Integer
         Dim indiceCadena As Integer
         For noLinea = 0 To (entrada.Count - 1)
@@ -47,7 +51,6 @@
                             codigo += caracter
                         Case "["
                             validarEstadoPalabra((indiceCadena - palabra.Length), noLinea)
-                            codigo += (caracter.)
                             agregarTokenATabla(caracter, "Corchete Izquierda", 130, indiceCadena, noLinea)
                         Case "]"
                             validarEstadoPalabra((indiceCadena - palabra.Length), noLinea)
@@ -96,6 +99,9 @@
                         Case "a" To "z"
                             esIdentificador = True
                             palabra = palabra & caracter
+                        Case "ñ"
+                            esIdentificador = True
+                            palabra = palabra & caracter
                         Case "0" To "9"
                             If esIdentificador Or identificadorConDigitos Then
                                 palabra = palabra & caracter
@@ -109,15 +115,22 @@
                             If esIdentificador Then
                                 palabra = palabra & caracter
                             Else
+                                existeError = True
+                                errores.Add(New Token(caracter, "Error", 0, indiceCadena, noLinea))
                             End If
                         Case Else
+                            existeError = True
+                            errores.Add(New Token(caracter, "Simbolo no reconocido", 0, indiceCadena, noLinea))
                     End Select
                 End If
             Next
         Next
-        Dim graficador As New Graficador
-        graficador.dibujarReporteTokens(tokens)
-    End Sub
+        resultado.Add("tokens", tokens)
+        If existeError Then
+            resultado.Add("errores", errores)
+        End If
+        Return resultado
+    End Function
 
     Private Sub validarEstadoPalabra(ByVal columna As Integer, ByVal fila As Integer)
         If esIdentificador Then
@@ -160,9 +173,6 @@
                 Case "texto"
                     tipo = "Palabra Reservada"
                     token = 70
-                Case "asociacionparacomentarios"
-                    tipo = "Palabra Reservada"
-                    token = 120
                 Case Else
                     tipo = "Identificador"
                     token = 280

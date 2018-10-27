@@ -70,9 +70,9 @@
     </ApplicationDefinition>
     <Compile Include="Administracion\AbrirArchivo.vb" />
     <Compile Include="Administracion\GuardarCodigo.vb" />
+    <Compile Include="Analizador\AnalizadorCentral.vb" />
     <Compile Include="Analizador\AnalizadorLexico.vb" />
     <Compile Include="Analizador\AnalizadorSintactico.vb" />
-    <Compile Include="Analizador\ManejoDeDatos.vb" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,6 +84,7 @@
     <Compile Include="Bean\Asociacion.vb" />
     <Compile Include="Bean\Caracteristica.vb" />
     <Compile Include="Bean\Clase.vb" />
+    <Compile Include="Bean\Comentario.vb" />
     <Compile Include="Bean\Produccion.vb" />
     <Compile Include="Bean\Token.vb" />
     <Compile Include="Graficador\Graficador.vb" />

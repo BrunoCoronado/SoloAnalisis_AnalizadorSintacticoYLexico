@@ -1,5 +1,8 @@
 ﻿Public Class Graficador
-    Public Sub dibujarDiagrama(ByVal clases As ArrayList, ByVal asociaciones As ArrayList)
+    Public Sub dibujarDiagrama(estructuras As Dictionary(Of String, ArrayList))
+        Dim clases As ArrayList = estructuras("clases")
+        Dim asociaciones As ArrayList = estructuras("asociaciones")
+        Dim comentarios As ArrayList = estructuras("comentarios")
         Dim direccion As String = My.Computer.FileSystem.SpecialDirectories.Desktop + "\diagrama"
         Try
             My.Computer.FileSystem.DeleteFile(direccion + ".txt")
@@ -17,7 +20,13 @@
 
         For i As Integer = 0 To (clases.Count - 1)
             textoNodo = "" & CType(clases(i), Clase).nombre
-            textoNodo = textoNodo & "[label = ""{" & CType(clases(i), Clase).nombre & "|"
+            Dim encabezado As String = ""
+            If CType(clases(i), Clase).Interfaz Then
+                encabezado = "\<\<Interfaz\>\>\n" + CType(clases(i), Clase).nombre
+            Else
+                encabezado = CType(clases(i), Clase).nombre
+            End If
+            textoNodo = textoNodo & "[label = ""{" & encabezado & "|"
 
             For Each atributo As Caracteristica In CType(clases(i), Clase).getAtributos
                 textoNodo = textoNodo & "" + atributo.visibilidad + " " + atributo.identificador + ":" + atributo.tipo + "\n"
@@ -29,17 +38,33 @@
                 textoNodo = textoNodo & "" + metodo.visibilidad + " " + metodo.identificador + "() :" + metodo.tipo + "\l"
             Next
 
-            textoNodo = textoNodo & "}""]"
+            If CType(clases(i), Clase).color IsNot "" Then
+                textoNodo = textoNodo & "}"" color=""" + convertirColorHEX(CType(clases(i), Clase).color) + """ ]"
+            Else
+                textoNodo = textoNodo & "}""]"
+            End If
+            streamWriter.WriteLine(textoNodo)
+        Next
+
+        For i As Integer = 0 To (comentarios.Count - 1)
+            textoNodo = "" & CType(comentarios(i), Comentario).nombre
+
+            textoNodo = textoNodo & "[label = ""{ " + CType(comentarios(i), Comentario).texto + " }"" style=filled, fillcolor=yellow color=yellow]"
             streamWriter.WriteLine(textoNodo)
         Next
 
         For Each asociacion As Asociacion In asociaciones
-            If verificarClases(clases, asociacion.padre, asociacion.hijo) = True Then
-                textoNodo = """" & asociacion.padre & """ -> """ & asociacion.hijo & """ [arrowhead=""" & asociacion.asociacion & """]"
+            If asociacion.asociacion IsNot Nothing Then
+                If verificarClases(clases, asociacion.padre, asociacion.hijo) = True Then
+                    textoNodo = """" & asociacion.padre & """ -> """ & asociacion.hijo & """ [arrowhead=""" & asociacion.asociacion & """]"
+                    streamWriter.WriteLine(textoNodo)
+                    Console.WriteLine("asociacion creada")
+                End If
+                Console.WriteLine("asociacion  no creada")
+            Else
+                textoNodo = """" & asociacion.padre & """ -> """ & asociacion.hijo & """ [arrowhead=""none"" style=dotted]"
                 streamWriter.WriteLine(textoNodo)
-                Console.WriteLine("asociacion creada")
             End If
-            Console.WriteLine("asociacion  no creada")
         Next
 
         streamWriter.WriteLine("}")
@@ -94,7 +119,6 @@
             abrirArchivo(archivo)
         End Try
     End Sub
-
 
     Public Sub dibujarReporteTokens(ByVal listaTokens As ArrayList)
         Dim direccion As String = My.Computer.FileSystem.SpecialDirectories.Desktop + "\reporteTokens"
@@ -175,4 +199,19 @@
             abrirArchivo(direccion + ".html")
         End Try
     End Sub
+
+    Private Function convertirColorHEX(colorRGB As String) As String
+        Try
+            Dim cl As String() = colorRGB.Split(New Char() {","c})
+            Dim r As Byte = cl(0)
+            Dim g As Byte = cl(1)
+            Dim b As Byte = cl(2)
+            Dim color As Color = Color.FromRgb(r, g, b)
+
+            Dim hex As String = "#" + color.R.ToString("x2") + color.G.ToString("x2") + color.B.ToString("x2")
+            Return hex
+        Catch ex As Exception
+            Return "#FF9999"
+        End Try
+    End Function
 End Class
